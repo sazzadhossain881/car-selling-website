@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from product.models import Car, CarVariants
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 def car_list_view(request):
@@ -7,10 +10,6 @@ def car_list_view(request):
         cars = Car.objects.all()
     return render(request, 'product/shop.html', context={'cars':cars})
 
-
-import json
-from django.core.serializers.json import DjangoJSONEncoder
-from django.shortcuts import render, get_object_or_404
 
 def car_retrieve_view(request, car_id):
 

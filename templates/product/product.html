@@ -57,10 +57,30 @@
 
             </div>
 
+            <div class="row pt-3">
+                <div class="col-md-3">
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <a href="" class="input-group-text">
+                    <i class="fas fa-plus"></i>
+                </a>
+                </div>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <div class="input-group-append">
+                <a href="" class="input-group-text">
+                    <i class="fas fa-minus"></i>
+                </a>
+                </div>
+                
+            </div>
+                </div>
+
+            </div>
+
             <form method="post" class="mt-4">
                 {% csrf_token %}
                 <input type="hidden" name="price_id" value="{{ default_variant.id }}" id="price-id-field">
-                <button class="btn btn-primary btn-lg">Buy</button>
+                <button class="btn btn-primary btn-lg w-25">Buy</button>
             </form>
 
             <p class="pt-4 text-sm">{{ car.description }}</p>
