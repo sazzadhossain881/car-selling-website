@@ -12,6 +12,7 @@
         <div class="col-md-6 pt-32">
 
             <h2>{{ car.title }}</h2>
+            <p class="pt-4 text-sm">{{ car.description }}</p>
 
             <p id="price-display" class="text-lg">
                 ${{ default_variant.car_price }}
@@ -61,29 +62,29 @@
                 <div class="col-md-3">
                 <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                <a href="" class="input-group-text">
+                <a id="add-to-cart-btn" class="input-group-text" href="#">
                     <i class="fas fa-plus"></i>
                 </a>
                 </div>
                 <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
                 <div class="input-group-append">
-                <a href="" class="input-group-text">
+                <a href="/order/remove-cart-item/?car_id={{car.id}}" class="input-group-text">
                     <i class="fas fa-minus"></i>
                 </a>
                 </div>
                 
             </div>
+
+
+
                 </div>
 
             </div>
 
-            <form method="post" class="mt-4">
-                {% csrf_token %}
-                <input type="hidden" name="price_id" value="{{ default_variant.id }}" id="price-id-field">
-                <button class="btn btn-primary btn-lg w-25">Buy</button>
-            </form>
+       
+                <a href="{% url 'cart' %}"><button class="btn btn-primary btn-lg w-25">Buy</button></a>
 
-            <p class="pt-4 text-sm">{{ car.description }}</p>
+          
         </div>
     </div>
 </div>
@@ -117,6 +118,29 @@ function updatePrice() {
 modelSelect.onchange = updatePrice;
 engineSelect.onchange = updatePrice;
 colorSelect.onchange = updatePrice;
+
+document.getElementById("add-to-cart-btn").onclick = function () {
+
+    const m = modelSelect.value;
+    const e = engineSelect.value;
+    const c = colorSelect.value;
+
+    // find selected variant
+    const match = variants.find(v =>
+        v.model === m &&
+        v.engine === e &&
+        v.color === c
+    );
+
+    const url = `/order/add-to-cart/?car_id={{car.id}}`
+        + `&car_model=${m}`
+        + `&car_engine=${e}`
+        + `&car_color=${c}`
+        + `&car_price=${match ? match.price : ''}`;
+
+    window.location.href = url;
+};
+
 </script>
 
 {% endblock %}
